@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: 配置 Jekyll 与 Github Pages
 date: 2019-01-31 20:49:00
 categories: 

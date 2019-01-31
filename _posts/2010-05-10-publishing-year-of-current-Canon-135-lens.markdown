@@ -1,4 +1,5 @@
 ---
+layout: default
 title: 佳能现售135镜头发表年份
 date: 2010-05-10 16:51:18
 categories:
