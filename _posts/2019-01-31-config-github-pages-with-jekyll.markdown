@@ -86,6 +86,16 @@ bundle exec jekyll serve
 
 这是一个大坑，待续
 
+# 自定义域名
+
+如果要用自己的域名代替 name.github.io 的域名（比如本站使用 blog.spadeq.com），可以使用 Github Pages 提供的自定义域名功能。
+
+前提当然是要在域名解析服务商那里配置 CNAME，不详说。国内建议使用 DNSPod 的免费服务。
+
+在 Github 的 repo 设置中，找到 Github Pages，在 Custom domain 一栏中填入域名。
+
+此外，还要在 Jekyll 站点根目录新建一个 `CNAME` 文件，内容也是域名。提交后，.github.io 的域名会自动重定向到自定义域名上。
+
 # 从 Hexo 迁移
 
 迁移过程其实非常简单，Jekyll 和 Hexo 都可以使用 markdown 来写文档，基本标记格式也相同。
