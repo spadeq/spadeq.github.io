@@ -18,20 +18,25 @@ tags:
 Jekyll 基于 Ruby，所以我使用的是 Ubuntu on Windows。执行：
 
 ```shell
-sudo apt install ruby ruby-dev zlib1g-dev
+sudo apt install ruby
+sudo apt install build-essentials ruby-dev zlib1g-dev
 sudo gem install bundler
+sudo gem install jekyll
 ```
+
+特别注意要安装 build-essentials 和两个 dev 包，不然后面 gem 和 bundle 命令会各种出错。
 
 # 创建 Github Pages
 
-登录进入 Github，创建一个新的公开 Repo，名称必须是 `<name>.github.io` 的形式，比如本站的 `spadeq.github.io`。gitignore 选择 Jekyll。
+登录进入 Github，创建一个新的**公开** Repo，名称必须是 `<name>.github.io` 的形式，比如本站的 `spadeq.github.io`。gitignore 选择 Jekyll，协议自定。
 
-# Jekyll 本地 repo
+# Jekyll 站点初始化
+
+## 创建 repo
 
 首先初始化一个 Jekyll 站点，注意将目录和 URL 中的相关名称替换成自己的站点名：
 
 ```shell
-sudo gem install jekyll
 mkdir spadeq.github.io
 cd spadeq.github.io
 git init
@@ -45,5 +50,50 @@ git commit -m "initial"
 git push -u origin master
 ```
 
-之所以先 pull，是为了防止直接创建 jekyll 站点后首次 push 不成功。
+之所以先 pull，是因为先创建 jekyll 站点后 git init 可能会导致首次 push 不成功。Jekyll 不能在一个已经存在的目录中 new 站点，所以就先 new 到一个临时目录中，然后再移动到 git 根目录。
 
+## 修改编译环境
+
+修改 Gemfile，将其中的 `gem "jekyll", "~> 3.x.x"` 一行注释掉，增加一行：
+
+```ruby
+gem 'github-pages', group: :jekyll_plugins
+```
+
+然后执行：
+
+```shell
+bundle update
+```
+
+注意过程中可能会提示输入用户口令，因为个别依赖包需要安装到系统目录中。
+
+# 编写内容
+
+## 基本配置
+
+站点的配置保存在 `_config.yml` 文件中，该文件的编写可以参考 Jekyll 的官方教程。
+
+本地预览命令如下：
+
+```shell
+bundle exec jekyll serve
+```
+
+在浏览器中访问 `http://127.0.0.1:4000` 可以在本地查看站点。push 到 git 上只需要几秒钟就会重新生成新的网页。这比 hexo 节省了编译和发布的步骤。而且站点一旦初始化完成，如果不需要本地预览的话，都不需要安装 ruby 环境，只要一个纯文本编辑工具。甚至还可以直接在 Github 网页上写 blog。
+
+## 主题
+
+这是一个大坑，待续
+
+# 从 Hexo 迁移
+
+迁移过程其实非常简单，Jekyll 和 Hexo 都可以使用 markdown 来写文档，基本标记格式也相同。
+
+首先，将 hexo 版 blog 目录下 `source/_posts` 中的所有文件复制到 jekyll 版 blog 目录的 `_posts` 中。然后在 `_posts` 目录下执行以下命令，修改文件后缀：
+
+```shell
+find ./ -name "*.md" | awk -F "." '{print $2}' | xargs -i -t mv ./{}.md ./{}.markdown
+```
+
+不需要修改文章的任何内容，即可平滑迁移。
