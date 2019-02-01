@@ -84,7 +84,7 @@ bundle exec jekyll serve
 
 ## 主题
 
-这是一个大坑，待续
+默认的 Jeykll 站点模板是使用 home、page、post 类型来组织站点的，而 Github Pages 推荐的几个主题，却只有 default 类型，而且没有常用的文章列表首页，所以建议不要直接用。。
 
 # 自定义域名
 
