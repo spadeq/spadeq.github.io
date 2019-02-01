@@ -67,6 +67,4 @@ sess = tf.Session()
 
 然后按下 Ctrl + F5 运行，如果能正确检测到显卡，那么环境就配置成功。例如我的显示如下：
 
-```
-2019-02-01 16:18:42.398039: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6265 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080, pci bus id: 0000:01:00.0, compute capability: 7.5)
-```
+    2019-02-01 16:18:42.398039: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6265 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080, pci bus id: 0000:01:00.0, compute capability: 7.5)
