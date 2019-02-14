@@ -1,5 +1,5 @@
 ---
-title: AIX小型机更换硬盘全攻略
+title: AIX 小型机更换硬盘全攻略
 date: 2015-01-07 10:24:08
 categories:
 - ITM
@@ -9,7 +9,7 @@ tags:
 - Disk
 - Unix
 ---
-当AIX小机出现硬盘故障时，不能简单的热插拔更换磁盘，要通过AIX系统相关的命令来实现。
+当 AIX 小机出现硬盘故障时，不能简单的热插拔更换磁盘，要通过 AIX 系统相关的命令来实现。
 
 1、定位失效硬盘
 
@@ -24,7 +24,7 @@ tags:
 
 这就说明 hdisk0 目前已损坏，需要更换。下文中提到的 hdisk0 均指该坏盘。
 
-2、拆掉rootvg中的hdisk0
+2、拆掉 rootvg 中的 hdisk0
 
     # unmirrorvg rootvg hdisk0
 
@@ -37,7 +37,7 @@ tags:
     rmlv：想要继续吗？y（是）n（否）？y
     rmlv：逻辑卷 lg_dumplv 已删除。
 
-3x. dump问题
+3x、dump 问题
 
 在执行缩减卷组命令时，可能会遇到dump相关的错误：
 
@@ -51,7 +51,7 @@ tags:
             复位转储设备并再试命令。
     0516-884 reducevg：不能删除物理卷 hdisk0。
 
-这个时候，就需要修改dump device状态。执行以下命令查看dump情况：
+这个时候，就需要修改 dump device 状态。执行以下命令查看 dump 情况：
 
     # sysdumpdev -l
 
@@ -83,14 +83,14 @@ tags:
 
 再进行卷组缩减就没问题了。
 
-4.修改启动顺序
+4、修改启动顺序
 
 这一步其实特别重要，因为更换硬盘可能会有意想不到的状况，将启动信息在hdisk1上也弄一份会更保险。
 
     # bosboot -ad hdisk1
     # bootlist -m normal hdisk1 cd0
 
-5.删除磁盘设备
+5、删除磁盘设备
 
     # rmdev -l hdisk0 -d
 
@@ -103,7 +103,7 @@ tags:
 
 6、动手更换物理磁盘
 
-**千万要注意，hdisk0和hdisk1的物理位置不一定是0在左边，1在右边，不要想当然的就把左边的盘给换了！需要通过下面的办法来确定：**
+千万要注意，**hdisk0 和 hdisk1 的物理位置不一定是 0 在左边，1 在右边，不要想当然的就把左边的盘给换了！需要通过下面的办法来确定：**
 
     # diag
 
@@ -144,7 +144,7 @@ tags:
     # bosboot -ad hdisk1
     # bootlist -m normal hdisk0 hdisk1 cd0
 
-10、重建dump
+10、重建 dump
 
     # mklv -t sysdump -y lg_dumplv rootvg 8 hdisk0
 
