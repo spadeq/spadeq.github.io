@@ -1,5 +1,5 @@
 ---
-title: Silverlight内容自动获得焦点
+title: Silverlight 内容自动获得焦点
 date: 2011-06-02 16:44:46
 categories:
 - Programming
@@ -7,9 +7,9 @@ categories:
 tags:
 - Silverlight
 ---
-我们有时候希望一个网页刚打开的时候，里面的silverlight控件就自动获取焦点，比如登录窗口。这只需要在调用页面增加几行代码就可以了。
+我们有时候希望一个网页刚打开的时候，里面的 silverlight 控件就自动获取焦点，比如登录窗口。这只需要在调用页面增加几行代码就可以了。
 
-首先在onSilverlightError下面添加一个JavaScript函数：
+首先在 onSilverlightError 下面添加一个 JavaScript 函数：
 
 ``` javascript
 function appLoad()
@@ -20,13 +20,13 @@ function appLoad()
 }
 ```
 
-然后在页面上调用Silverlight的object标签里加上这个id：
+然后在页面上调用 Silverlight 的 object 标签里加上这个 id：
 
 ``` html
 id="silverlightControl"
 ```
 
-最后，在object标签内部加一个参数：
+最后，在 object 标签内部加一个参数：
 
 ``` html
 <param name="onLoad" value="appLoad">

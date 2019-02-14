@@ -1,7 +1,7 @@
 ---
 title: System Center VMM 2016 微型部署
 date: 2017-08-25 11:50:40
-updated: 017-10-01 16:50:40
+updated: 2017-10-01 16:50:40
 categories:
 - ITM
 - Cloud

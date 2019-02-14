@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 佳能现售135镜头发表年份
+title: 佳能现售 135 镜头发表年份
 date: 2010-05-10 16:51:18
 categories:
 - Photography
@@ -8,7 +8,7 @@ tags:
 - Canon
 - lens
 ---
-注：带有IS的镜头，后面标注的数字指的是IS防抖级数
+注：带有 IS 的镜头，后面标注的数字指的是 IS 防抖级数
 1987
 EF 15mm F2.8 fisheye
 EF 28m F2.8
