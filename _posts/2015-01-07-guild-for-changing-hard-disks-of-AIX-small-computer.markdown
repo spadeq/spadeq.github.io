@@ -68,7 +68,7 @@ tags:
 
     lg_dumplv:N/A
     PV                COPIES        IN BAND       DISTRIBUTION  
-    hdisk0            008:000:000   100%          000:008:000:000:000 
+    hdisk0            008:000:000   100%          000:008:000:000:000
 
 果然是位于 hdisk0，这就是无法缩减卷组的原因。下面我们把这个主 dump 设备也设成 null：
 

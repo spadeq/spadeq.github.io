@@ -8,13 +8,13 @@ tags:
 - Hyper-V
 - Windows
 ---
-请注意本文要玩的是“Microsoft Hyper-V Server 2012 R2”，而不是Windows Server 2012 R2中的Hyper-V。这两者是有区别的，前面那位是一个独立的sku，安装完成后只有hypervisor的功能，比Windows Server的core安装还要更“瘦”。由于它的瘦，很多事情就只能借助PowerShell命令来进行了。我觉得还是尽量不要使用第三方的图形化工具比较好。
+请注意本文要玩的是「Microsoft Hyper-V Server 2012 R2」，而不是 Windows Server 2012 R2 中的 Hyper-V。这两者是有区别的，前面那位是一个独立的 sku，安装完成后只有 hypervisor 的功能，比 Windows Server 的 core 安装还要更「瘦」。由于它的瘦，很多事情就只能借助 PowerShell 命令来进行了。我觉得还是尽量不要使用第三方的图形化工具比较好。
 <!-- more -->
 本文是在一个比较高大上的环境和需求下来玩，而且会不断更新。至于安装过程这么简单的事情就不在这里说了。
 
 # 关于网络
 
-我们关注网络的两个方面：teaming和VLAN。一个合格的生产环境，核心路由肯定是有冗余，我这边就是把Hyper-V服务器的四个网卡做这样的设计：
+我们关注网络的两个方面：teaming 和 VLAN。一个合格的生产环境，核心路由肯定是有冗余，我这边就是把 Hyper-V 服务器的四个网卡做这样的设计：
 
 |Port|Switch|Payload|
 |-|-|-|
@@ -23,15 +23,15 @@ tags:
 |NIC 3|Switch-A|VMs|
 |NIC 4|Switch-B|VMs|
 
-这样就是管理网和生产网分别都是接到两个交换机上。那么网卡1、2需要做teaming，3和4做另一个teaming，以实现LBFO，也就是Load Balancing + Failover。以网口1和2为例，在Hyper-V主机控制台上执行powershell，然后敲命令：
+这样就是管理网和生产网分别都是接到两个交换机上。那么网卡 1、2 需要做 teaming，3 和 4 做另一个 teaming，以实现 LBFO，也就是Load Balancing + Failover。以网口 1 和 2 为例，在 Hyper-V 主机控制台上执行 powershell，然后敲命令：
 
     PS> Get-NetAdapter
 
-这条命令能够列出所有的网卡，记住要编组网卡的Name项，然后执行：
+这条命令能够列出所有的网卡，记住要编组网卡的 Name 项，然后执行：
 
     PS> New-NetLbfoTeam "Mgmt" -TeamingMode SwitchIndependent
 
-随后会提示要你提供TeamMembers，依次将网卡Name给它，当提示`"TeamMembers[2]:"`让你输入第三个网卡时，直接敲回车结束。这里的"Mgmt"是编组后的网络名称，可以自己定。teamingMode一共有三种：Static、SwitchIndependent和LACP，具体区别不在本文范围，应根据自己实际情况而定。交换机的负载均衡模式也有三种：Address Hash地址哈希、Hyper-V Port和Dynamic动态。现在Windows Server 2012 R2默认的是Dynamic方式。如果要修改，可以使用下面的命令：
+随后会提示要你提供TeamMembers，依次将网卡Name给它，当提示 `"TeamMembers[2]:"` 让你输入第三个网卡时，直接敲回车结束。这里的"Mgmt"是编组后的网络名称，可以自己定。teamingMode一共有三种：Static、SwitchIndependent和LACP，具体区别不在本文范围，应根据自己实际情况而定。交换机的负载均衡模式也有三种：Address Hash地址哈希、Hyper-V Port和Dynamic动态。现在Windows Server 2012 R2默认的是Dynamic方式。如果要修改，可以使用下面的命令：
 
     PS> Set-NetlbfoTeam Mgmt -LoadBalancingAlgorithm HyperVPort
 
