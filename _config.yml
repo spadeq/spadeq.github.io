@@ -25,11 +25,16 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: spadeq
 github_username:  spadeq
 
+# Layouts
+pagenate: 10
+paginate_path: "page:num"
+
 # Build settings
 markdown: kramdown
 theme: minima
 plugins:
-  - jekyll-feed
+  - jekyll-paginate
+#  - jekyll-feed
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
