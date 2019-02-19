@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Machine Learning 笔记
-date: 2019-02-01 16:07:00
+date: 2019-02-19 10:36:00
 categories: 
 - ML
 tags:
@@ -46,3 +46,12 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_nx_n+\epsilon$$
 
 常用的算法包括：线性回归、支持向量机（SVM）、树类算法和神经网络。
 
+插一嘴：[Kaggle](https://www.kaggle.com/)，一个可以用来做数据分析研究的网站。
+
+# 分类
+
+分类问题的输出变量是离散的。根据输出变量的多少，可以分为二分类和多分类。
+
+衡量分类算法要看它的精确率、召回率。
+
+常用的算法包括：K-means、感知机、朴素贝叶斯、决策树、逻辑斯蒂回归、支持向量机、神经网络。
