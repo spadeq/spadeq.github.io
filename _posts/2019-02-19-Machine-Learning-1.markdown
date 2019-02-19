@@ -8,6 +8,8 @@ tags:
 - Machine Learning
 ---
 
+> It's not who has the best algorithm that wins. It's who has the most data.  --- Andrew Ng
+
 机器学习（Machine Learning）的含义是，通过一定的算法，使用历史数据进行训练，训练后产生模型。利用模型，可以对未来新的数据进行预测。
 
 # Machine Learning 关键概念
@@ -55,3 +57,20 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_nx_n+\epsilon$$
 衡量分类算法要看它的精确率、召回率。
 
 常用的算法包括：K-means、感知机、朴素贝叶斯、决策树、逻辑斯蒂回归、支持向量机、神经网络。
+
+# 聚类
+
+无监督学习的一种。把相似的对象通过静态分类的方法分成不同的组别或更多的子集。其中同一子集的成员都有相似的属性。
+
+算法：K-means、高斯混合聚类、密度聚类、层次聚类。
+
+用途：用户画像、动植物分类等。
+
+# 机器学习的流程
+
+1. 数据提取（ETL）
+1. 数据清洗（Feature cleaning）。必要前提，干掉脏数据，可能会耗费很多精力。
+1. 特征工程（Feature engineering）。关键因素，搞分类的都知道，核心就是玩特征。
+1. 训练模型（Training model）
+1. 验证与优化模型（Validation）。多种手段和方法，慢慢打磨。
+
