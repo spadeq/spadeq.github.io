@@ -73,4 +73,3 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_nx_n+\epsilon$$
 1. 特征工程（Feature engineering）。关键因素，搞分类的都知道，核心就是玩特征。
 1. 训练模型（Training model）
 1. 验证与优化模型（Validation）。多种手段和方法，慢慢打磨。
-
