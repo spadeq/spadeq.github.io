@@ -60,3 +60,5 @@ sudo snap restart microk8s
 docker pull mirrorgooglecontainers/pause:3.1
 docker tag mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1
 ```
+
+当然全套 kubernetes 需要的镜像有很多，需要一个一个手工操作。（蛋疼）
