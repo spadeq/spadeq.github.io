@@ -246,7 +246,6 @@ DEPENDENCIES
   jekyll-paginate
   jekyll-theme-cayman (~> 0.1.1)
   kramdown
-  minima (~> 2.0)
   tzinfo-data
 
 BUNDLED WITH
