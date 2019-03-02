@@ -21,7 +21,7 @@ description: >- # this means to ignore newlines until "baseurl:"
  When the dark night \\
  delivers the day
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://spadeq.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: spadeq
 github_username:  spadeq
 permalink: /:year/:month/:day/:title.html
