@@ -20,11 +20,11 @@ NBU 7.6.1 的安装介质已经支持直接安装在 Windows Server 2012 R2 上�
 
 Master Server 的安装无需多言，完全按照默认值就可以了。Media Server 要注意安装时填写 Master Server 的域名，别的也一切按照默认。
 
-都装好之后，在 Master Server 启动控制台，选择「NetBackup Management」->「Host Properties」->「Master Servers」，找到nbumaster，双击之。
+都装好之后，在 Master Server 启动控制台，选择「NetBackup Management」->「Host Properties」->「Master Servers」，找到 nbumaster，双击之。
 
-在「Servers」中的「Media Servers」选项卡里，点击「Add」，然后输入Media Server的域名，点击添加然后确定。
+在「Servers」中的「Media Servers」选项卡里，点击「Add」，然后输入 Media Server 的域名，点击添加然后确定。
 
-请注意，如果在这一步出现了「unable to save data on some hosts」、「file write failed (14)」错误，可能是因为开启了UAC的缘故。请关掉NBU控制台，然后以管理员权限重新运行。
+请注意，如果在这一步出现了「unable to save data on some hosts」、「file write failed (14)」错误，可能是因为开启了 UAC 的缘故。请关掉 NBU 控制台，然后以管理员权限重新运行。
 
 上面工作做完之后，打开管理员模式命令行，在 nbu 安装目录 bin 下执行 `bpdown /f /v`（两台机器都要做），然后先后在 Master 和 Media 上执行 `bpup /v`，重启 nbu 各项服务。
 
