@@ -103,7 +103,7 @@ WinForm 下的 ReportViewer 控件，位于 Microsoft.Reporting.WinForms 命名�
 * ServerReport.ReportPath：是 ReportFolder 和 ReportName 的组合，比如「/Test/Report1.rdl」，注意注意千万注意，最开始的那个「/」一定不能省略！
 * 对于实际应用，采用代码来控制 ReportViewer 要比设计时设置属性更加常用，下面就是一个简短的例子，概括了这样一个过程：
 
-``` c#
+```C#
 this.reportViewer1.ServerReport.ReportPath = "/Test/Report1";
 List<ReportParameter> parameters = new List<ReportParameter>();
 parameters.Add(new ReportParameter("params",textQueryString.Text));
@@ -126,7 +126,7 @@ this.reportViewer1.RefreshReport();
 
 还记得前面提到过的 <http://ServerUrl/ReportServer> 吗？SSRS 已经为我们准备了一个用来查看报表的方法，即通过 URL 访问，比如要查看在 localhost/ReportServer 服务器中，位于 Test 下的 Report1 报表，可以直接在浏览器中输入  <http://localhost/ReportServer?Test/Report1>，SSRS 会自动调用一个系统内置的页面来显示它。在这个带参数的 URL 后面，我们可以通过附加 URL 参数的方法来对报表进行控制。比如上面的那个例子，在 ASP.NET 中可以使用 Response.Write() 向页面写入下面的代码来弹出窗口显示报表：
 
-``` html
+```html
 "<script language=\"JavaScript\"> window.open('http://localhost/ReportServer?Test/Report1&params=" + textQueryString.Text + "&rc:Parameters=false&rs:Command=Render'; </script>"
 ```
 
