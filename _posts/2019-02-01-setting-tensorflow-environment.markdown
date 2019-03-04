@@ -2,6 +2,7 @@
 layout: post
 title: 设置 Tensorflow 基本环境
 date: 2019-02-01 16:07:00
+updated: 2019-03-04 21:23:00
 categories: 
 - ML
 - Tensorflow
@@ -48,11 +49,13 @@ conda config --set show_channel_urls yes
 
 在 Anaconda Navigator 选到 Home，确定 Applicaions on 选的是刚建的环境，然后点 VS Code 下面的 Launch 按钮。这一步的作用是让 Anaconda 协助配置 VSC。
 
+首先将 shell 改成 cmd。选择 File -> Preferences -> Settings，输入 powershell，然后把 Shell 改成 `C:\WINDOWS\System32\cmd.exe`。
+
 打开 VSC，打开一个目录（可以新建一个空目录），然后新建一个文件，保存为 .py 扩展名（名称无所谓）。
 
 提示 Linter pylint 未安装，点 Install，上面选 Install with conda。
 
-接着会提示 PowerShell 不支持，建议改为 Command Prompt，接受。
+~~着会提示 PowerShell 不支持，建议改为 Command Prompt，接受。~~
 
 再次 Install，可能还需要回答 y。这时候最好关闭重启 VSC。另外，VSC 的 Python 运行时也确定了（左下角可以看到）。
 
@@ -67,4 +70,4 @@ sess = tf.Session()
 
 然后按下 Ctrl + F5 运行，如果能正确检测到显卡，那么环境就配置成功。例如我的显示如下：
 
-    2019-02-01 16:18:42.398039: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6265 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080, pci bus id: 0000:01:00.0, compute capability: 7.5)
+    2019-03-04 21:25:11.154549: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 19376 MB memory) -> physical GPU (device: 0, name: TITAN RTX, pci bus id: 0000:01:00.0, compute capability: 7.5)

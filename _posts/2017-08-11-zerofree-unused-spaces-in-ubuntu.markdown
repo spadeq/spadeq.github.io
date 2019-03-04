@@ -28,11 +28,15 @@ tags:
 
 重新以只读方式挂载根分区：
 
-    mount -o remount,ro /
+```shell
+mount -o remount,ro /
+```
 
 执行置零：
 
-    zerofree -v /dev/mapper/ubuntusource--vg-root
+```shell
+zerofree -v /dev/mapper/ubuntusource--vg-root
+```
 
 注意，如果没有使用 LVM，则可以直接使用 /dev/sda1 这样的路径名称。如果还有 home 等其它的分区，那么也分别进行只读挂载和 zerofree 操作。
 等进度走完，就说明置零操作成功。
@@ -41,6 +45,8 @@ tags:
 
 重新以正常方式启动虚拟机，执行：
 
-    sudo vmware-toolbox-cmd disk shrinkonly
+```shell
+sudo vmware-toolbox-cmd disk shrinkonly
+```
 
 等待进度完成。如果虚拟机磁盘是多文件的话，速度会稍微快一点，单文件会非常慢，耐心等待吧。

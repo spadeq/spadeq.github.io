@@ -13,7 +13,7 @@ Twenty Sixteen 默认是不显示访问量的，只要修改以下几个文件�
 
 # 首页
 
-依序进入 WP 后台【外观】–>【编辑】，于最右一列下拉找到 template-tags.php，点击之，在正文编辑区找到 `twentysixteen_entry_meta()` 函数，这里所列出的就是各项 meta 信息。在合适的位置，例如 `$format = get_post_format();` 上方，添加：
+依序进入 WP 后台「外观」–>「编辑」，于最右一列下拉找到 template-tags.php，点击之，在正文编辑区找到 `twentysixteen_entry_meta()` 函数，这里所列出的就是各项 meta 信息。在合适的位置，例如 `$format = get_post_format();` 上方，添加：
 
 ``` php
 if ( function_exists('the_views')) {
