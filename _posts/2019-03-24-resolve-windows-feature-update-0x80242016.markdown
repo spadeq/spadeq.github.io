@@ -15,3 +15,5 @@ tags:
 * 将 C:\\Windows\\SoftwareDistribution 目录删除或者改名；
 * 再以管理员权限执行 `net start wuauserv`；
 * 重新走更新流程（重新下载）。
+
+其中管理员权限执行可以在 Win + R 运行窗口中，按住 Ctrl + Shift 来方便地实现。
