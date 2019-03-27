@@ -39,11 +39,13 @@ conda config --set show_channel_urls yes
 
 # 配置 Anaconda 的 Tensorflow 包
 
-打开 Anaconda Navigator，左边选 Environment，然后点击中间列下方的 Create。
+~~打开 Anaconda Navigator，左边选 Environment，然后点击中间列下方的 Create。~~
 
-在弹出对话框中，为环境起名（比如 tensor），勾选 **Python 3.6**，点击创建。
+~~在弹出对话框中，为环境起名（比如 tensor），勾选 **Python 3.6**，点击创建。~~
 
-右边栏选择 All，然后搜索 tensorflow-gpu，勾选，Apply，Apply。如果没有 nVidia 显卡，就只能勾选 tensorflow，不能使用 GPU 加速。
+现在 tensorflow 包已经支持 python 3.7，所以不需要额外创建 Python 3.6 环境了。当然，如果你希望拥有一个独立的 tensorflow 环境，也可以按照上面的操作来新建一个环境，只是 Python 版本直接勾选最新的 3.7 即可。
+
+右边栏选择 All，然后搜索 tensorflow。如果你有一块 nVidia 独立选卡，勾选 tensorflow-gpu，Apply，Apply。如果没有 nVidia 显卡，就只能勾选 tensorflow，不能使用 GPU 加速。
 
 # 配置 VSC 的编译环境
 
@@ -65,9 +67,9 @@ conda config --set show_channel_urls yes
 
 ```python
 import tensorflow as tf
-sess = tf.Session()
+print(tf.__version__)
 ```
 
-然后按下 Ctrl + F5 运行，如果能正确检测到显卡，那么环境就配置成功。例如我的显示如下：
+然后按下 Ctrl + F5 运行，如果能正确检测到显卡，并输出正确的 tensorflow 版本，那么环境就配置成功。例如我的显示如下：
 
     2019-03-04 21:25:11.154549: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 19376 MB memory) -> physical GPU (device: 0, name: TITAN RTX, pci bus id: 0000:01:00.0, compute capability: 7.5)
