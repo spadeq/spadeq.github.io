@@ -71,7 +71,7 @@ docker info
 
 ### 主节点
 
-执行以下命令（将 `<ip>` 替换为节点实际地址：
+执行以下命令（将 `<ip>` 替换为节点实际地址）：
 
 ```shell
 docker swarm init --advertise-addr <ip>
