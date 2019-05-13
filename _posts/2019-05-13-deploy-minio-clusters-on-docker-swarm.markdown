@@ -282,7 +282,7 @@ docker volume prune
 
 ### 负载均衡
 
-既然是集群，那么单节点的使用方式就显得太 low 了。下面我们在集群之前通过 HAProxy 作为负载均衡器，实现一个地址和一个端口对外服务（HAProxy 可进一步通过 keepalived 实现冗余，在这里不做介绍了）。
+既然是集群，那么单节点的使用方式就显得太 low 了。下面我们在集群之前通过 HAProxy 作为负载均衡器，实现一个地址和一个端口对外服务（HAProxy 可进一步通过 keepalived 实现冗余，在这里不做介绍了），甚至进一步分离出内网地址，将 minio 实地址隐藏到内网中，仅允许通过 haproxy 代理访问，提升安全性。
 
 首先新安装一台 Ubuntu 服务器，然后安装 haproxy：
 
@@ -300,13 +300,13 @@ frontend minio_front
 
 backend minio_back
         balance roundrobin
-        server minio1 11.64.19.231:9001 check
-        server minio2 11.64.19.232:9002 check
-        server minio3 11.64.19.233:9003 check
-        server minio4 11.64.19.234:9004 check
+        server minio1 <minio1-ip>:9001 check
+        server minio2 <minio2-ip>:9002 check
+        server minio3 <minio3-ip>:9003 check
+        server minio4 <minio4-ip>:9004 check
 ```
 
-启动服务：
+注意替换 ip 为自己的实际节点公开地址。之后启动服务：
 
 ```shell
 sudo systemctl enable haproxy
