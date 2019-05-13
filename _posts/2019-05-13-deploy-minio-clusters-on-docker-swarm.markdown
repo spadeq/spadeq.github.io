@@ -131,7 +131,7 @@ docker node update --label-add minio-node4=true minio-4
 
 我们使用 compose 文件来配置 stack。Minio 官方给了一个示例文件 docker-compose-secrets.yaml，我们稍加改动（主要是主机名、标签名）即可：
 
-```yaml docker-compose-secrets.yaml
+```yaml
 version: '3.1'
 
 services:
