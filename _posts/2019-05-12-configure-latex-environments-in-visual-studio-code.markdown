@@ -11,15 +11,15 @@ tags:
 
 本文介绍如何在 Windows 下使用 Visual Studio Code 搭配 MikTeX 构建 LaTeX 编辑与编译环境。
 
-# 基本软件
+## 基本软件
 
 最基本的当然是安装 Visual Studio Code 和 MikTeX，都使用基于用户的默认安装。
 
-# 插件配置
+## 插件配置
 
 在 VSC 中唯一需要安装的就是 LaTeX Workshop 插件，这是个 all-in-one 的十全大补包，包含了几乎所有需要的功能。
 
-## LaTeX Workshop 必要配置
+### LaTeX Workshop 必要配置
 
 LW 默认是调用 latexmk 进行编译的，这与 TeXlive 配合比较好。在 MikTeX 环境下，更好的选择是调用 texify，同时兼顾中文文字，将引擎改为 xelatex。打开 VSC 的设置，在 User Settings 中搜索 recipe，然后点击 Edit in settings.json，加入下面的代码：
 
@@ -49,7 +49,7 @@ LW 默认是调用 latexmk 进行编译的，这与 TeXlive 配合比较好。�
 ],
 ```
 
-# 辅助功能
+## 辅助功能
 
 有两项比较实用的辅助功能，一是自动格式化，二是字数统计。这两项功能在 MikTeX 发行版中都要依赖 Perl 环境。
 
