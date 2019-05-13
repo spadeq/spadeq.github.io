@@ -39,7 +39,7 @@ df -h
 
 执行 `sudo apt install docker.io` 安装 docker。
 
-修改 /etc/docker/daemon.js （不存在就新建），内容如下：
+修改 /etc/docker/daemon.json （不存在就新建），内容如下：
 
 ```json
 {
