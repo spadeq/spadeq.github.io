@@ -31,7 +31,7 @@ docker info
 
 重启一下。
 
-### 从 apt 源安装 k8s 组件
+### 从 apt 源安装控制平面
 
 在国内，用不了 Google 源，建议使用阿里云或者科大的源。但是要注意，科大源目前没有 gpg 秘钥，这个秘钥只能用阿里云的。下面的命令混用了这两个源。
 
@@ -320,6 +320,150 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2V
 ```
 
 后面这一长串就是登录 token，在登录页面填入即可登录。
+
+## 集群升级
+
+本文只针对 v1.14.x 小版本升级。
+
+### 升级控制平面
+
+首先执行 `sudo apt update && apt-cache policy kubeadm` 结果可能如下：
+
+```txt
+kubeadm:
+  Installed: 1.14.2-00
+  Candidate: 1.14.3-00
+```
+
+说明当前安装的是 1.14.2 版，但是有新的 1.14.3 版。另外，我们之前安装 kubeadm 的时候做了 `apt-mark hold`，即防止 `apt upgrade` 命令平时升级这些包。所以现在升级时要临时取消 hold。注意替换命令中的版本号为最新版本。
+
+```bash
+sudo su -
+apt-mark unhold kubeadm && \
+apt update && apt install -y kubeadm=1.14.3-00 && \
+apt-mark hold kubeadm
+exit
+```
+
+确定 kubeadm 版本已升级：
+
+```bash
+kubeadm version
+```
+
+### 升级主节点
+
+执行 `sudo kubeadm upgrade plan`，结果如下：
+
+```txt
+COMPONENT   CURRENT       AVAILABLE
+Kubelet     4 x v1.14.2   v1.14.3
+
+Upgrade to the latest version in the v1.14 series:
+
+COMPONENT            CURRENT   AVAILABLE
+API Server           v1.14.2   v1.14.3
+Controller Manager   v1.14.2   v1.14.3
+Scheduler            v1.14.2   v1.14.3
+Kube Proxy           v1.14.2   v1.14.3
+CoreDNS              1.3.1     1.3.1
+Etcd                 3.3.10    3.3.10
+
+You can now apply the upgrade by executing the following command:
+
+        kubeadm upgrade apply v1.14.3
+```
+
+这里可以看到几个关键的镜像也有更新。在国内或者内网，还是要进行一次搬运，将新版本镜像导入到每一个节点上。
+
+确定每个节点上都有这些镜像的对应版本后，执行：
+
+```bash
+sudo kubeadm upgrade apply v1.14.3
+```
+
+回答 y，然后耐心等待，在中间某些过程会停留较长时间，只要确定镜像都准备好，肯定能过的。（实在出错，就重启再来）
+
+看到下面的结果，就是成功了：
+
+```txt
+[upgrade/successful] SUCCESS! Your cluster was upgraded to "v1.14.3". Enjoy!
+
+[upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets if you haven't already done so.
+```
+
+然后执行下面的命令，升级 kubectl 和 kubelet：
+
+```bash
+sudo su -
+apt-mark unhold kubelet kubectl && \
+apt update && apt install -y kubelet=1.14.3-00 kubectl=1.14.3-00 && \
+apt-mark hold kubelet kubectl
+exit
+
+sudo systemctl restart kubelet
+```
+
+### 升级其它控制平面节点
+
+在单 master 下无需执行，参照上一节内容，把 `sudo kubeadm upgrade apply` 命令换成 `sudo kubeadm upgrade node experimental-control-plane` 即可。另外，`sudo kubeadm upgrade plan` 也不需要执行。
+
+### 升级工作节点
+
+就是那几个非 master 的节点。注意要逐个升级。
+
+首先将 kubeadm 进行升级。
+
+```bash
+sudo su -
+apt-mark unhold kubeadm && \
+apt update && apt install -y kubeadm=1.14.3-00 && \
+apt-mark hold kubeadm
+exit
+```
+
+在**主节点**上，执行下面命令，将工作节点 cordon：
+
+```bash
+kubectl drain k8s-node1 --ignore-daemonsets --delete-local-data
+```
+
+注意，这个 delete-local-data 的参数是会删除所有本地卷的，这是因为之前部署了 dashboard。正式生产环境要慎重。然后回到工作节点升级 kubelet 配置：
+
+```bash
+sudo kubeadm upgrade node config --kubelet-version v1.14.3
+```
+
+最后升级 kubelet 和 kubectl：
+
+```bash
+sudo su -
+apt-mark unhold kubelet kubectl && \
+apt update && apt install -y kubelet=1.14.3-00 kubectl=1.14.3-00 && \
+apt-mark hold kubelet kubectl
+exit
+
+sudo systemctl restart kubelet
+```
+
+再到**主节点**上 uncordor 工作节点，并查看节点状态：
+
+```bash
+kubectl uncordon k8s-node1
+kubectl get nodes
+```
+
+如果工作节点版本已更新，则表明成功。
+
+```txt
+NAME         STATUS   ROLES    AGE   VERSION
+k8s-master   Ready    master   25h   v1.14.3
+k8s-node1    Ready    <none>   25h   v1.14.3
+k8s-node2    Ready    <none>   25h   v1.14.2
+k8s-node3    Ready    <none>   25h   v1.14.2
+```
+
+以此类推，去升级其它的工作节点吧！
 
 ## 常用命令
 
