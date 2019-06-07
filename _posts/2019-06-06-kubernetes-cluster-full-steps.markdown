@@ -223,6 +223,104 @@ kube-system   kube-scheduler-k8s-master               1/1     Running   0       
 kube-system   kubernetes-dashboard-5f7b999d65-wkhtm   1/1     Running   0          44m
 ```
 
+### 登录 dashboard
+
+正常情况下你是没办法直接访问到 k8s 集群中的容器服务的，目前我们也没有部署 ingress，所以只能用 workaround。以下两种方法，官方建议 k8s proxy，但这样做的问题在于 ssl 访问会失败。还有一种办法就是修改 NodePort。
+
+#### k8s proxy
+
+在管理节点执行：
+
+```bash
+kubectl proxy --accept-hosts='^*$' --address='0.0.0.0'
+```
+
+然后访问 <http://[MASTER-IP]:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy>。
+
+#### NodePort
+
+首先执行：
+
+```bash
+kubectl describe svc -n kube-system kubernetes-dashboard
+```
+
+可以看到 Type 值是 ClusterIP。我们下面将其改成 NodePort：
+
+```bash
+kubectl patch svc -n kube-system kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}'
+```
+
+再执行之前的命令，可以看到 Type 已经被改为了 NodePort。下面我们找一下容器暴露的端口。执行：
+
+```bash
+kubectl get svc -n kube-system
+```
+
+结果可能如下：
+
+```txt
+NAME                   TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                  AGE
+kube-dns               ClusterIP   10.96.0.10    <none>        53/UDP,53/TCP,9153/TCP   16h
+kubernetes-dashboard   NodePort    10.100.19.3   <none>        443:30134/TCP            15h
+```
+
+说明它在主机上对应的端口是 30134。再继续寻找它所在的节点主机：
+
+```bash
+kubectl get pods -A -o wide
+```
+
+对应输出可能如下：
+
+```txt
+kube-system   kubernetes-dashboard-5f7b999d65-wkhtm   1/1     Running   0          15h   10.244.1.2   k8s-node1    <none>           <none>
+```
+
+这就说明位于 node1 上。访问 <https://[node1-ip]:30134> 可打开登录页面。登录时会提示从两种方式中选择一种。我们采取令牌的方法。
+
+### 创建登录 token
+
+这里用到的是 k8s 的 RBAC 机制。
+
+首先创建服务用户：
+
+```bash
+kubectl create serviceaccount admin-user -n kube-system
+```
+
+然后创建集群角色绑定：
+
+```bash
+kubectl create clusterrolebinding admin-user --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user
+```
+
+最后获取 tocken：
+
+```bash
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+```
+
+显示类似于：
+
+```txt
+Name:         admin-user-token-vwdvn
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: admin-user
+              kubernetes.io/service-account.uid: d1c72619-88e1-11e9-8920-000c29dc0e56
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXZ3ZHZuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJkMWM3MjYxOS04OGUxLTExZTktODkyMC0wMDBjMjlkYzBlNTYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.DeT18f_NSEpXqqCeWP0SB_D8pomLJrDT9uDm3v3re5AEBvFO8f3gDrFDVdFcFBB23izBhRvISjTUGKPj-l19oWoDCVP3-vQ6WBnTCu81bFoBvqsS4KHaCyOWBexWe5trYrtV1hK8Rl_z3EY2_WORg95glJVa2I92-kUdhPGTqwsW6WznjSJbQkPC-REPjbqRrnSJ0kA8dl7l57drKQhkhHIVEQjcwuhxvegxocplEFmdcfsJBISIcj0acUiHl9zPYTMSUmoRLwDuRfKOCXEbLDkPTYg0ic6enEQ67OyVPNdHbZ3QUlteIv-OiCqaD_u97X2bStkgqTgmKWW9SQRMxA
+```
+
+后面这一长串就是登录 token，在登录页面填入即可登录。
+
 ## 常用命令
 
 kubectl get componentstatuses //查看node节点组件状态
