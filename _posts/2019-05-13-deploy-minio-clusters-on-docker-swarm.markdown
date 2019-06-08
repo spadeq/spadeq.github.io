@@ -79,9 +79,11 @@ docker swarm init --advertise-addr <ip>
 
 然后会有一串提示：
 
+```txt
     To add a worker to this swarm, run the following command:
 
     docker swarm join --token SWMTKN-1-1m6rb67e2i6l1hingm0m9640432rhpkwimw0fdoli405x9tz4o-14pklnbph8h0tw61y78p0x18o <ip>:2377
+```
 
 这就是工作节点加入所使用的命令。
 
@@ -97,11 +99,13 @@ docker node ls
 
 如果出现类似下面的输出，就说明集群创建成功了。
 
+```txt
     ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
     x10titjzvr1cmwmm7d2pujyto *   minio-1             Ready               Active              Leader              18.09.2
     6ec4ehqm33fmclea6bj4j6u5g     minio-2             Ready               Active                                  18.09.2
     o0s2ip8juud0bmfzipooljm42     minio-3             Ready               Active                                  18.09.2
     hvmesf3vqojf2n0v2mlcodla0     minio-4             Ready               Active                                  18.09.2
+```
 
 ## 部署 minio 服务
 
@@ -253,12 +257,14 @@ docker stack deploy --compose-file=docker-compose-secrets.yaml minio_stack
 
 如果不出意外，在四个节点上都会分别运行一个 docker 容器。通过 `docker logs -f <container-id>` 可以查看日志，如果有类似下面的输出，表示启动成功：
 
+```txt
     Waiting for the first server to format the disks.
     Status:         4 Online, 0 Offline.
     Endpoint:  http://10.255.0.47:9000  http://10.0.2.6:9000  http://172.18.0.3:9000  http://127.0.0.1:9000
 
     Browser Access:
        http://10.255.0.47:9000  http://10.0.2.6:9000  http://172.18.0.3:9000  http://127.0.0.1:9000
+```
 
 ### 删除集群
 

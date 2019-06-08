@@ -13,11 +13,11 @@ tags:
 
 本文为学习何之源先生《21 个项目玩转深度学习》之笔记，这是一本非常好的 Tensowflow 学习书籍，如果您对本文的内容感兴趣，请多多支持原作者何先生！[原作链接](http://www.broadview.com.cn/book/5490)
 
-# MNIST 数据
+## MNIST 数据
 
 MNIST 是一套手写阿拉伯数字的标准识别数据，图片的类别就是阿拉伯数字的 0 ~ 9，共 10 类。图片为 28 x 28 像素的灰度图像，取值为 0 ~ 1 之间的浮点数。每幅图片就是手写 0 ~ 9 的各种形态。原始的 MNIST 数据由 60000 幅构成训练集（train），10000 幅构成测试集（test）。TensorFlow 又将训练集中抽取了 5000 幅作为验证集（validation），实际训练集为 55000 幅。
 
-## MNIST 数据的使用
+### MNIST 数据的使用
 
 目前一般使用 `tensorflow.examples.tutorials.mnist` 包来处理 MNIST 数据，但是这种方法已经被标记为 deprecated，将来会废弃。官方推荐的方式可以参照其 [github](https://github.com/tensorflow/models/tree/master/official/mnist)。但是本文仍然保留原先的用法。
 
@@ -57,7 +57,7 @@ mnist 对象包括下列属性：
 
 由于图像不换行保存，所以从 28 x 28 的矩阵变成了 784 维向量。
 
-# Python 环境准备
+## Python 环境准备
 
 Coding 环境可以按照[这篇博文](https://spadeq.github.io/2019/02/01/setting-tensorflow-environment.html)的内容来配置。然后为了顺利编译本文的代码，还需要在 Anaconda 中安装下列包：
 

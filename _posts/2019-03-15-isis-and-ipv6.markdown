@@ -11,7 +11,7 @@ tags:
 - IGP
 ---
 
-# 网络拓扑
+## 网络拓扑
 
 组网拓扑图如下：
 
@@ -38,7 +38,7 @@ tags:
 
 P.S. 拓扑图绘制工具为 [asciiflow](http://asciiflow.com/)
 
-# 配置
+## 配置
 
 注意对应接口，没有画在拓扑图上。
 
@@ -121,9 +121,9 @@ P.S. 拓扑图绘制工具为 [asciiflow](http://asciiflow.com/)
     isis ipv6 en 1
     q
 
-# 验证结果
+## 验证结果
 
-## 从路由器 A 查看 ISIS 路由表
+### 从路由器 A 查看 ISIS 路由表
 
 在路由器 A 上执行 `dis isis route`，结果如下：
 
@@ -168,7 +168,7 @@ P.S. 拓扑图绘制工具为 [asciiflow](http://asciiflow.com/)
         20.00% packet loss
         round-trip min/avg/max = 30/37/50 ms
 
-## 查看路由器 C 的邻居信息
+### 查看路由器 C 的邻居信息
 
 在路由器 C 上执行 `dis isis peer`，可以查看邻居信息。如果要查看详细信息，则在命令后面加上 `verbose`。结果如下：
 
@@ -219,7 +219,7 @@ P.S. 拓扑图绘制工具为 [asciiflow](http://asciiflow.com/)
 
 在这张表中，能够看到路由器 C 的三个 ISIS 邻居，它们的 System ID（也就是 net 地址除了最后 `.00` 之外的后面三段）、level（两个 level-1 邻居和一个 level-2 邻居），以及对应的接口。
 
-## 查看路由器 C 的 LSDB 信息
+### 查看路由器 C 的 LSDB 信息
 
 通过命令 `dis isis lsdb` 查看 LSDB 信息。同样可以加上 `verbose` 以显示详细信息。
 

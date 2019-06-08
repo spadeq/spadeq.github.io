@@ -16,9 +16,9 @@ tags:
 
 <!-- more -->
 
-# 安装基本软件
+## 安装基本软件
 
-## Anaconda
+### Anaconda
 
 从 [Anaconda 官网](https://www.anaconda.com/download/) 下载 Python 3.7 版的 Anaconda 图形界面安装包并安装。
 
@@ -30,14 +30,14 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/m
 conda config --set show_channel_urls yes
 ```
 
-## Visual Studio Code
+### Visual Studio Code
 
 从 [VSC 官网](https://code.visualstudio.com/Download) 下载对应操作系统的版本，Windows 推荐使用 64 位 User Installer。完毕后，安装以下扩展插件：
 
 * Python（就在欢迎页上）
 * Anaconda Extension Pack
 
-# 配置 Anaconda 的 Tensorflow 包
+## 配置 Anaconda 的 Tensorflow 包
 
 ~~打开 Anaconda Navigator，左边选 Environment，然后点击中间列下方的 Create。~~
 
@@ -47,7 +47,7 @@ conda config --set show_channel_urls yes
 
 右边栏选择 All，然后搜索 tensorflow。如果你有一块 nVidia 独立选卡，勾选 tensorflow-gpu，Apply，Apply。如果没有 nVidia 显卡，就只能勾选 tensorflow，不能使用 GPU 加速。
 
-# 配置 VSC 的编译环境
+## 配置 VSC 的编译环境
 
 在 Anaconda Navigator 选到 Home，确定 Applicaions on 选的是刚建的环境，然后点 VS Code 下面的 Launch 按钮。这一步的作用是让 Anaconda 协助配置 VSC。
 
@@ -72,4 +72,6 @@ print(tf.__version__)
 
 然后按下 Ctrl + F5 运行，如果能正确检测到显卡，并输出正确的 tensorflow 版本，那么环境就配置成功。例如我的显示如下：
 
+```txt
     2019-03-04 21:25:11.154549: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 19376 MB memory) -> physical GPU (device: 0, name: TITAN RTX, pci bus id: 0000:01:00.0, compute capability: 7.5)
+```
