@@ -3,15 +3,16 @@ layout: post
 title: 设置 Tensorflow 基本环境
 date: 2019-02-01 16:07:00
 updated: 2019-03-04 21:23:00
-categories: 
-- ML
-- Tensorflow
+categories:
+  - ML
+  - Tensorflow
 tags:
-- Machine Learning
-- Tensorflow
-- Anaconda
-- Python
+  - Machine Learning
+  - Tensorflow
+  - Anaconda
+  - Python
 ---
+
 本文介绍使用 Anaconda + Visual Studio Code 搭建 Tensorflow 的基本开发环境。
 
 <!-- more -->
@@ -22,7 +23,9 @@ tags:
 
 从 [Anaconda 官网](https://www.anaconda.com/download/) 下载 Python 3.7 版的 Anaconda 图形界面安装包并安装。
 
-安装完成后切换清华源。打开 conda 命令提示符，然后执行：
+非官方源现在基本上都停了，老老实实用官方的慢源吧。。
+
+~~安装完成后切换清华源。打开 conda 命令提示符，然后执行：~~
 
 ```shell
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
@@ -34,8 +37,8 @@ conda config --set show_channel_urls yes
 
 从 [VSC 官网](https://code.visualstudio.com/Download) 下载对应操作系统的版本，Windows 推荐使用 64 位 User Installer。完毕后，安装以下扩展插件：
 
-* Python（就在欢迎页上）
-* Anaconda Extension Pack
+- Python（就在欢迎页上）
+- Anaconda Extension Pack
 
 ## 配置 Anaconda 的 Tensorflow 包
 
@@ -51,7 +54,13 @@ conda config --set show_channel_urls yes
 
 在 Anaconda Navigator 选到 Home，确定 Applicaions on 选的是刚建的环境，然后点 VS Code 下面的 Launch 按钮。这一步的作用是让 Anaconda 协助配置 VSC。
 
-首先将 shell 改成 cmd。选择 File -> Preferences -> Settings，输入 powershell，然后把 Shell 改成 `C:\WINDOWS\System32\cmd.exe`。
+~~首先将 shell 改成 cmd。选择 File -> Preferences -> Settings，输入 powershell，然后把 Shell 改成 `C:\WINDOWS\System32\cmd.exe`。~~
+
+首先打开 Terminal，如果用的是 PowerShell，请执行下面的命令，启用本地 PS 脚本执行权限：
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
 打开 VSC，打开一个目录（可以新建一个空目录），然后新建一个文件，保存为 .py 扩展名（名称无所谓）。
 
