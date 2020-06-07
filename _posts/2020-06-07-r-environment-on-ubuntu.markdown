@@ -43,3 +43,5 @@ sudo apt install -y libcurl4-openssl-dev libssl-dev libxml2-dev
 ```r
 install.packages("languageserver", INSTALL_opts = c('--no-lock'))
 ```
+
+注意最后的 `--no-lock` 参数，如果不提供的话，可能会出现「Permission denied ERROR: moving to final location failed」错误。
