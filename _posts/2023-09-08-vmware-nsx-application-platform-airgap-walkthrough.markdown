@@ -42,4 +42,11 @@ VMCA 是 vCenter 使用的中间 CA。SSH 以 root 用户登录 vCenter，执行
 * 证书输入 `/tmp/vmca_issued_cer.cer`，key 输入 `vmca_issued_key.key`，等待进度走完。
 * 到 vCenter 页面上确定证书更换成功。
 
+### ESXi 主机 CA
   
+在 vCenter 里，右键点选 ESXi 主机，Certificates，然后依次 Refresh CA Certificates、Renew Certificate。
+
+这里有一个坑，就是可能会在刷新证书时报一个 Start time 的错误。这是因为 VMCA 在生成主机证书时，会把起始时间减去一天，如果你的 VMCA 刚刚签署，那么有效期就是今天。这时要生成一个以昨天为开始日期的证书，就会报错。
+
+解决办法有两个，一是修改这个提前的时间，需要更改高级 vCenter 设置，请自行搜索。还有就是硬等一天。
+
